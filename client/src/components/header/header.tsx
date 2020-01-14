@@ -14,6 +14,3 @@ export const Header: React.FC = () => {
         </nav>
     )
 }
-
-
-
