@@ -1,10 +1,9 @@
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import {ToDo} from "./todo";
 import Header from './header';
 import React from "react";
-import Login from "./auth/login/login";
-import {Registr} from "./auth/registr/registr";
-
+import LoginPage from "./auth/login";
+import Registr from "./auth/registr";
 
 export const SecretRoute = (isAuth)  => {
     if (isAuth) {
@@ -12,7 +11,6 @@ export const SecretRoute = (isAuth)  => {
             <>
                 <Header/>
                 <div className='container'>
-
                     <Switch>
                         <Route exact path='/' component={ToDo}/>
                     </Switch>
@@ -23,10 +21,11 @@ export const SecretRoute = (isAuth)  => {
         return (
             <div className='container'>
                 <Switch>
-                    <Route exact path='/login' component={Login}/>
-                    <Route exact path='/registr' component={Registr}/>
+                    <Route exact path='/login' component={LoginPage}/>
+                    <Route   path='/registr' component={Registr}/>
+                    <Route component={LoginPage}/>
                 </Switch>
-                <Redirect to='/login' />
+
             </div>
         )
 

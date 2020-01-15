@@ -3,7 +3,7 @@ const User = require('../model/user');
 const {check, validationResult} = require('express-validator');
 const router = Router()
 
-router.post('/create', [
+router.post('/registration', [
     check('email', 'pass or email nor correct').isEmail(),
     check('password').isLength({min: 2})
 ], (req, res) => {
@@ -20,10 +20,10 @@ router.post('/create', [
     user.save()
         .then(user => {
             console.log(`${user} was added`)
-            res.end()
+            res.status(200).json({msg: 'User added'})
         })
         .catch(err => {
-            res.json({msg: 'User wasnt add'})
+            res.status(400).json({msg: 'User wasnt add'})
             console.error(err)
         })
 
