@@ -1,0 +1,42 @@
+.todo_list {
+    border: 0px;
+    position: relative;
+}
+.no_view {
+    opacity: 0;
+}
+
+.view {
+    opacity: 1;
+}
+.no_viewInp {
+    opacity: 0;
+    position: absolute;
+    width: 50% !important;
+}
+
+.viewInp {
+    opacity: 1;
+    position: absolute;
+    width: 50% !important;
+}
+
+
+
+.collection-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem !important;
+    border: 1px solid #e0e0e0;
+
+}
+
+.collection-item .material-icons.delete {
+    color: red
+}
+
+.collection .collection-item:last-child {
+    border: 1px solid #e0e0e0;
+}
+

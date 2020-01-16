@@ -1,5 +1,5 @@
 import {Route, Switch} from "react-router-dom";
-import {ToDo} from "./todo";
+import ToDo from "./todo";
 import Header from './header';
 import React from "react";
 import LoginPage from "./auth/login";
@@ -12,7 +12,7 @@ export const SecretRoute = (isAuth)  => {
                 <Header/>
                 <div className='container'>
                     <Switch>
-                        <Route exact path='/' component={ToDo}/>
+                        <Route exact path='/add' component={ToDo}/>
                     </Switch>
                 </div>
             </>

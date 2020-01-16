@@ -1,6 +1,7 @@
 export interface IToDo {
     title: string,
-    id: number,
-
+    _id: string,
+    owner: string,
+    view: boolean
 }
 

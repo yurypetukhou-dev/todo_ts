@@ -2,6 +2,7 @@ const {Schema, model, Types} = require('mongoose')
 const crypto = require('crypto')
 const config = require('config')
 const jwt = require('jsonwebtoken')
+
 const User = new Schema({
     email: {
         type: String,
@@ -12,7 +13,9 @@ const User = new Schema({
         type: String
     },
     salt: String,
-    notes: [{type: Types.ObjectId, ref: 'User'}]
+    notes: [{type: Types.ObjectId, ref: 'Note'}]
+},{
+    versionKey: false // You should be aware of the outcome after set to false
 })
 
 User.methods.setPassword = function(password){

@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/api', require('./route/user'))
+app.use('/api/todo', require('./route/toDos'))
 
 const PORT = config.get('port') || '5000';
 

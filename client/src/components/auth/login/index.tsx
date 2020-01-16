@@ -3,10 +3,11 @@ import Login from './login'
 import axios from "axios";
 import {useHistory} from "react-router";
 import {connect} from "react-redux";
-import {emit} from "cluster";
+
+var deсoder = require('jwt-decode');
 
 interface IloginPage {
-    login: () => void
+    login: (user:any) => void
 }
 
 const LoginPage: React.FC<IloginPage> = ({login}) => {
@@ -20,7 +21,7 @@ const LoginPage: React.FC<IloginPage> = ({login}) => {
     const [err, setErr] = useState<string>('')
 
     const handleLogin = async () => {
-        console.log('login  <------------------')
+
         try {
             const logIn = await axios.post('api/auth', {
                 email: userInput.email,
@@ -28,7 +29,9 @@ const LoginPage: React.FC<IloginPage> = ({login}) => {
             })
 
             if (logIn) {
-                login()
+                const decoderedJwt = deсoder(logIn.data.token)
+                localStorage.setItem('user', JSON.stringify(decoderedJwt.id))
+                login(decoderedJwt)
                 history.push('/')
             }
         } catch (e) {
@@ -39,7 +42,6 @@ const LoginPage: React.FC<IloginPage> = ({login}) => {
     }
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('handleInput  <------------------')
         setUserInput({...userInput, [e.target.name]: e.target.value})
     }
 
@@ -48,7 +50,7 @@ const LoginPage: React.FC<IloginPage> = ({login}) => {
     )
 }
 export default connect(null, (dispatch) => {
-   return {
-       login: () => dispatch({type: "LOGIN", payload: true})
-   }
+    return {
+        login: (user: any) => dispatch({type: "LOGIN", payload: user})
+    }
 })(LoginPage)
