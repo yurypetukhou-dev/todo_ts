@@ -1,6 +1,6 @@
 export interface IToDo {
     title: string,
-    _id: string,
+    noteId: string,
     owner: string,
     view: boolean
 }

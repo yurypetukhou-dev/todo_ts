@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import List from "./list/list";
 import {IToDo} from "../../../../interfaces/toDo";
 import axios from 'axios'
@@ -21,6 +21,8 @@ const ToDo: React.FC<ItoDo> = ({owner}) => {
     const [toDos, setTodos] = useState<IToDo[]>([])
     const [toDoTitle, setToDoTitle] = useState<string>('')
     const [editTitle, setEditTitle] = useState<string>('')
+    const myRefs = useRef([])
+    const myNoteRefs = useRef([])
 
     useEffect(() => {
         window.M.updateTextFields()
@@ -41,7 +43,7 @@ const ToDo: React.FC<ItoDo> = ({owner}) => {
 
                 let newToDo: IToDo = {
                     title: toDoTitle,
-                    _id: `${Date.now()}`,
+                    noteId: `${Date.now()}`,
                     owner: owner,
                     view: false
                 }
@@ -56,14 +58,21 @@ const ToDo: React.FC<ItoDo> = ({owner}) => {
     }
 
     const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setToDoTitle(e.target.value.trim())
+        setToDoTitle(e.target.value.trimStart())
     }
 
-    const handelDelete = (id: string) => {
-        console.log('----------------------------- del')
-        const deletedItem = axios.delete(`api/todo/${id}`)
-        if (deletedItem) {
-            setTodos(toDos.filter((item) => item._id !== id))
+
+    const handelDelete = async (id: string, e?: React.MouseEvent) => {
+        // @ts-ignore
+        const targetId = e.target.getAttribute('data-del')
+        try {
+           const deletedItem = await axios.delete(`api/todo/${id}`)
+            if(deletedItem) {
+                // @ts-ignore
+                myNoteRefs.current[targetId].classList.add('deleted')
+            }
+        } catch (err) {
+            console.error(err.message)
         }
     }
 
@@ -71,15 +80,27 @@ const ToDo: React.FC<ItoDo> = ({owner}) => {
         setEditTitle(e.target.value)
     }
 
-    const handelEdit = (id: string) => {
-        console.log(editTitle, '------- edit')
+    const handelKeyPress = (id: string, e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handelEdit(id)
+        }
+    }
 
+    const handelEdit = (id: string, e?: any) => {
+
+        if (e) {
+            //@ts-ignore
+            myRefs.current[e.target.id].focus()
+        }
+        setEditTitle('')
         const changedArr = toDos.map((item) => {
 
-                if (item._id === id) {
+                if (item.noteId === id) {
                     item.view = !item.view
-                    item.title = editTitle
-
+                    item.title = editTitle ? editTitle : item.title
+                    axios.put(`api/todo/${id}`, {
+                        note: item
+                    })
                 } else {
                     item.view = false
                 }
@@ -106,7 +127,16 @@ const ToDo: React.FC<ItoDo> = ({owner}) => {
                     <label htmlFor="first_name">First Name</label>
                 </div>
             </div>
-            <List toDos={toDos} deleteItem={handelDelete} handelEdit={handelEdit} setEdit={handleEditTitle}/>
+            <List
+                toDos={toDos}
+                deleteItem={handelDelete}
+                handelEdit={handelEdit}
+                setEdit={handleEditTitle}
+                editTitle={editTitle}
+                handelKeyPress={handelKeyPress}
+                myRefs={myRefs}
+                myNoteRefs={myNoteRefs}
+            />
         </React.Fragment>
     )
 }

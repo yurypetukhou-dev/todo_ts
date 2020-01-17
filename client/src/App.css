@@ -2,6 +2,7 @@
     border: 0px;
     position: relative;
 }
+
 .no_view {
     opacity: 0;
 }
@@ -9,6 +10,18 @@
 .view {
     opacity: 1;
 }
+
+.viewNote {
+    position: relative;
+    right: 0;
+
+}
+
+.deleted {
+    transition: 1s right linear;
+    right: 100%;
+}
+
 .no_viewInp {
     opacity: 0;
     position: absolute;
@@ -20,7 +33,6 @@
     position: absolute;
     width: 50% !important;
 }
-
 
 
 .collection-item {

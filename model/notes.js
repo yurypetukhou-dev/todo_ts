@@ -1,6 +1,10 @@
 const {Schema, model, Types} = require('mongoose')
 
 const Note = new Schema({
+    noteId: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
