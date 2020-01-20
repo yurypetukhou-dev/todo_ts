@@ -14,22 +14,28 @@
 .viewNote {
     position: relative;
     right: 0;
+    height: auto;
 }
-
-.deleted {
-    animation-duration: 1s;
-    animation-name: timing-percents;
+/*TODO пофиксить это уродство и наконец разобратся с анимацией */
+.viewNote.deleted {
+    animation-duration: 2s !important;
+    animation-name: timing-percents !important;
     animation-timing-function: linear;
-    right: 100%;
+    transition-property: all;
+    overflow: hidden;
 }
 
 @keyframes timing-percents {
     from {
         right: 0;
+        height: auto;
+        padding: auto;
     }
     to {
         right: 100%;
-
+        height: 0;
+        padding: 0;
+        margin-bottom: 0rem
     }
 
 }
