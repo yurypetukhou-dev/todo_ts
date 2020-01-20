@@ -14,12 +14,24 @@
 .viewNote {
     position: relative;
     right: 0;
-
 }
 
 .deleted {
-    transition: 1s right linear;
+    animation-duration: 1s;
+    animation-name: timing-percents;
+    animation-timing-function: linear;
     right: 100%;
+}
+
+@keyframes timing-percents {
+    from {
+        right: 0;
+    }
+    to {
+        right: 100%;
+
+    }
+
 }
 
 .no_viewInp {

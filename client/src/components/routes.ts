@@ -1,7 +1,7 @@
 import React from 'react'
 import {SecretRoute} from "./secretRote";
 import {connect} from "react-redux";
-
+import {setAuthorizationToken} from "../middleware/auth";
 
 interface IMain {
     user: any,
@@ -15,6 +15,7 @@ const Routes: React.FC<IMain> = ({user, login}) => {
     if (localStorage.getItem("user")) {
         const user = localStorage.getItem('user')
         login(JSON.parse(`${user}`))
+        setAuthorizationToken(true)
     }
     const useRoutes = SecretRoute(isLogin)
     return useRoutes

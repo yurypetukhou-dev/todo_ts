@@ -20,9 +20,9 @@ const List: React.FC<IListProps> = ({toDos, deleteItem, handelEdit, setEdit, edi
         <ul className='collection todo_list'>
             {
                 toDos.map((item) => (
-                        <Fade top key={item.noteId}>
-                            <li className="collection-item viewNote" id={item.noteId}
-                                ref={el => myNoteRefs.current[item.noteId] = el} >
+
+                            <li className="collection-item viewNote" id={item.noteId  }
+                                ref={el => myNoteRefs.current[item.noteId] = el}  key={item.noteId}>
                                 <input type="text"
                                        ref={el => myRefs.current[item.noteId] = el}
                                        className={!item.view ? 'no_viewInp' : "viewInp"}
@@ -37,7 +37,7 @@ const List: React.FC<IListProps> = ({toDos, deleteItem, handelEdit, setEdit, edi
                             <i className="material-icons delete" data-del={item.noteId} onClick={(e) => deleteItem(item.noteId, e)}>delete</i>
                         </span>
                             </li>
-                        </Fade>
+
                     )
                 )}
         </ul>

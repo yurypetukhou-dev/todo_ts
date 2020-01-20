@@ -3,6 +3,7 @@ import Login from './login'
 import axios from "axios";
 import {useHistory} from "react-router";
 import {connect} from "react-redux";
+import {setAuthorizationToken} from "../../../middleware/auth";
 
 var deсoder = require('jwt-decode');
 
